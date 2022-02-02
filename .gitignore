@@ -1,0 +1,10 @@
+.env
+.prod.env
+
+.idea
+.vscode
+**/.DS_Store
+
+letsencrypt
+
+/html/uploads/*

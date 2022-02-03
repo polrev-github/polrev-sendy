@@ -12,11 +12,6 @@
 
 FROM php:7.4.8-apache as sendy
 
-ARG SENDY_VER=5.2.3
-ARG ARTIFACT_DIR=5.2.3
-
-ENV SENDY_VERSION ${SENDY_VER}
-
 RUN apt -qq update && apt -qq upgrade -y \
   # Install unzip cron
   && apt -qq install -y unzip cron  \
@@ -26,11 +21,23 @@ RUN apt -qq update && apt -qq upgrade -y \
   # Remove unused packages
   && apt autoremove -y 
 
-# Copy artifacts
-COPY ./artifacts/${ARTIFACT_DIR}/ /tmp
-
 # Install Sendy
 RUN mv /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
+  ## Tweak PHP ini
+  && sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' /usr/local/etc/php/php.ini \
+  && sed -i 's/max_execution_time = 30/max_execution_time = 120/g' /usr/local/etc/php/php.ini \
+  && sed -i 's/memory_limit = 128M/memory_limit = 512M/g' /usr/local/etc/php/php.ini \
+  && sed -i 's/post_max_size = 8M/post_max_size = 1024M/g' /usr/local/etc/php/php.ini \
+  && sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 512M/g' /usr/local/etc/php/php.ini \
+  && sed -i 's/max_input_time = 60/max_input_time = 120/g' /usr/local/etc/php/php.ini \
+  && sed -i 's/max_input_vars = 1000/max_input_vars = 5000/g' /usr/local/etc/php/php.ini \
+  && sed -i 's/short_open_tag = Off/short_open_tag = On/g' /usr/local/etc/php/php.ini \
+  && sed -i 's/zlib.output_compression = Off/zlib.output_compression = On/g' /usr/local/etc/php/php.ini \
+  && sed -i 's/;opcache.enable=1/opcache.enable=1/g' /usr/local/etc/php/php.ini \
+  && sed -i 's/;opcache.save_comments=1/opcache.save_comments=1/g' /usr/local/etc/php/php.ini \
+  && sed -i 's/session.gc_maxlifetime = 1440/session.gc_maxlifetime = 7200/g' /usr/local/etc/php/php.ini \
+  && sed -i 's/;date.timezone.*/date.timezone = UTC/' /usr/local/etc/php/php.ini \
+  # Set server name
   && echo "\nServerName \${SENDY_FQDN}" > /etc/apache2/conf-available/serverName.conf \
   # Ensure X-Powered-By is always removed regardless of php.ini or other settings.
   && printf "\n\n# Ensure X-Powered-By is always removed regardless of php.ini or other settings.\n\
@@ -53,7 +60,7 @@ RUN chmod 0644 /etc/cron.d/cron \
   # Create the log file to be able to run tail
   && touch /var/log/cron.log
 
-COPY artifacts/docker-entrypoint.sh /usr/local/bin/
+COPY ./docker-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 CMD ["apache2-foreground"]
 

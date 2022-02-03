@@ -92,7 +92,7 @@ _apache2_want_help() {
 }
 
 _main() {
-  log_info "Entrypoint script for Sendy Server ${SENDY_VERSION} started."
+  log_info "Entrypoint script for Sendy Server started."
 
   # if command starts with an option, prepend php
   if [ "${1:0:1}" = '-' ]; then

@@ -16,7 +16,7 @@ services:
       - traefik.http.middlewares.https_redirect.redirectscheme.permanent=true
 
   # Database
-  sendy_db:
+  db_sendy:
     env_file: ./config/.prod.env
     restart: always
 

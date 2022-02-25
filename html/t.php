@@ -35,7 +35,6 @@
 ?>
 <?php 
 	include('includes/helpers/short.php');
-	include_once('includes/helpers/geo/geolite/geoip.inc');
 	require 'includes/helpers/geo/geolite2/vendor/autoload.php';
 	use GeoIp2\Database\Reader;
 	
@@ -64,6 +63,7 @@
 	//Get country code
 	if(version_compare(PHP_VERSION, '5.4')==-1)
 	{
+		include_once('includes/helpers/geo/geolite/geoip.inc');
 		$gi = geoip_open("includes/helpers/geo/geolite/GeoIP.dat",GEOIP_STANDARD);
 		$country = geoip_country_code_by_addr($gi, $ip);
 		geoip_close($gi);

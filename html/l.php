@@ -263,7 +263,12 @@
 		else return $data;
 	}
 	
-	//redirect to link	
+	//Prepare link for redirection	
 	$link = stripos($link, 'http') === false ? 'http://'.$link : $link;
+	
+	//Prevent search engine from indexing trackable links
+	header('X-Robots-Tag: none');
+	
+	//redirect to link
 	header("Location: $link");
 ?>

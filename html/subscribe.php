@@ -43,7 +43,6 @@
 <?php
 	include_once('includes/helpers/short.php');
 	include_once('includes/helpers/PHPMailerAutoload.php');
-	include_once('includes/helpers/geo/geolite/geoip.inc');
 	require 'includes/helpers/geo/geolite2/vendor/autoload.php';
 	use GeoIp2\Database\Reader;
 	
@@ -381,6 +380,7 @@
 		//Get country code
 		if(version_compare(PHP_VERSION, '5.4')==-1)
 		{
+			include_once('includes/helpers/geo/geolite/geoip.inc');
 			$gi = geoip_open("includes/helpers/geo/geolite/GeoIP.dat",GEOIP_STANDARD);
 			$country = geoip_country_code_by_addr($gi, $ipaddress);
 			geoip_close($gi);
@@ -560,12 +560,12 @@
 			{
 				$confirmed = $unsubscribed && $confirmed ? 0 : $confirmed;				
 				$name_line = !isset($_POST['name']) ? '' : 'name = "'.$name.'",';				
-				$q = 'UPDATE subscribers SET unsubscribed = 0, last_campaign = NULL, timestamp = '.$time.', confirmed = '.$confirmed.', '.$name_line.' custom_fields = "'.substr($cf_value, 0, -3).'" '.$gdpr1.', notes = "'.$notes.'" WHERE email = "'.$email.'" AND list = '.$list_id;
+				$q = 'UPDATE subscribers SET unsubscribed = 0, last_campaign = NULL, timestamp = '.$time.', confirmed = '.$confirmed.', '.$name_line.' custom_fields = "'.substr($cf_value, 0, -3).'" '.$gdpr1.', notes = "'.$notes.'", ip = "'.$ipaddress.'", country = "'.$country.'", referrer = "'.$referrer.'" WHERE email = "'.$email.'" AND list = '.$list_id;
 			}
 			else
 			{
 				$name_line = !isset($_POST['name']) ? '' : ', name = "'.$name.'"';				
-				$q = 'UPDATE subscribers SET unsubscribed = 0, last_campaign = NULL, timestamp = '.$time.', confirmed = 1 '.$name_line.', custom_fields = "'.substr($cf_value, 0, -3).'" '.$gdpr1.', notes = "'.$notes.'" WHERE email = "'.$email.'" AND list = '.$list_id;
+				$q = 'UPDATE subscribers SET unsubscribed = 0, last_campaign = NULL, timestamp = '.$time.', confirmed = 1 '.$name_line.', custom_fields = "'.substr($cf_value, 0, -3).'" '.$gdpr1.', notes = "'.$notes.'", ip = "'.$ipaddress.'", country = "'.$country.'", referrer = "'.$referrer.'" WHERE email = "'.$email.'" AND list = '.$list_id;
 			}
 			$r = mysqli_query($mysqli, $q);
 			if ($r)
@@ -699,8 +699,11 @@
 		{			
 			//send confirmation email if list is double opt in
 			if($opt_in && $confirmed!=1 && $bounced!=1 && $complaint!=1 && $feedback!=_('Email is suppressed.'))
-			{			
-				$confirmation_link = $app_path.'/confirm?e='.encrypt_val($subscriber_id).'&l='.encrypt_val($list_id);
+			{
+				if(isset($_GET['i']))
+					$confirmation_link = $app_path.'/confirm?e='.encrypt_val($subscriber_id).'&l='.$i_array[1];
+				else
+					$confirmation_link = $app_path.'/confirm?e='.encrypt_val($subscriber_id).'&l='.encrypt_val($list_id);
 				
 				if($confirmation_subject=='')
 					$confirmation_subject = _('Confirm your subscription to').' '.$from_name;

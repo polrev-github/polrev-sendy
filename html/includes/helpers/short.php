@@ -2,7 +2,7 @@
 //Get API key
 $q_api = 'SELECT api_key FROM login ORDER BY id ASC LIMIT 1';
 $r_api = mysqli_query($mysqli, $q_api);
-if ($r_api) while($row = mysqli_fetch_array($r_api)) $api_key = $row['api_key'];
+if ($r_api) while($row = mysqli_fetch_array($r_api)) define('API_KEY', $row['api_key']);
 
 //Encryption method
 $encryptionMethod = "AES-256-CBC";
@@ -10,12 +10,10 @@ $encryptionMethod = "AES-256-CBC";
 //Encrypt a value
 function encrypt_val($val)
 {
-	global $api_key;
 	global $encryptionMethod;
-	
 	if(version_compare(PHP_VERSION, '5.3.0') >= 0 && function_exists('openssl_encrypt')) //openssl_encrypt requires at least 5.3.0
 	{
-		$encrypted = version_compare(PHP_VERSION, '5.3.3') >= 0 ? openssl_encrypt($val, $encryptionMethod, $api_key, 0, '3j9hwG7uj8uvpRAT') : openssl_encrypt($val, $encryptionMethod, $api_key, 0);
+		$encrypted = version_compare(PHP_VERSION, '5.3.3') >= 0 ? openssl_encrypt($val, $encryptionMethod, API_KEY, 0, '3j9hwG7uj8uvpRAT') : openssl_encrypt($val, $encryptionMethod, API_KEY, 0);
 		if(!$encrypted) 
 		{
 			$error = 'Unable to encrypt string with openssl_encrypt()';
@@ -42,7 +40,6 @@ function encrypt_val($val)
 //Decrypt a string
 function decrypt_string($val)
 {
-	global $api_key;
 	global $encryptionMethod;
 	
 	if(version_compare(PHP_VERSION, '5.3.0') >= 0 && function_exists('openssl_decrypt')) //openssl_decrypt requires at least 5.3.0
@@ -50,7 +47,7 @@ function decrypt_string($val)
 		$decrypted = str_replace('892', '/', $val);
 		$decrypted = str_replace('763', '+', $decrypted);
 		
-		$decrypted = version_compare(PHP_VERSION, '5.3.3') >= 0 ? openssl_decrypt($decrypted, $encryptionMethod, $api_key, 0, '3j9hwG7uj8uvpRAT') : openssl_decrypt($decrypted, $encryptionMethod, $api_key, 0);
+		$decrypted = version_compare(PHP_VERSION, '5.3.3') >= 0 ? openssl_decrypt($decrypted, $encryptionMethod, API_KEY, 0, '3j9hwG7uj8uvpRAT') : openssl_decrypt($decrypted, $encryptionMethod, API_KEY, 0);
 		if(!$decrypted) 
 		{
 			if(!empty($decrypted))
@@ -76,7 +73,6 @@ function decrypt_string($val)
 //Decrypt an integer
 function decrypt_int($in)
 {
-	global $api_key;
 	global $encryptionMethod;
 
 	if(version_compare(PHP_VERSION, '5.3.0') >= 0 && function_exists('openssl_decrypt')) //openssl_decrypt requires at least 5.3.0
@@ -84,7 +80,7 @@ function decrypt_int($in)
 		$decrypted = str_replace('892', '/', $in);
 		$decrypted = str_replace('763', '+', $decrypted);
 
-		$decrypted = version_compare(PHP_VERSION, '5.3.3') >= 0 ? openssl_decrypt($decrypted, $encryptionMethod, $api_key, 0, '3j9hwG7uj8uvpRAT') : openssl_decrypt($decrypted, $encryptionMethod, $api_key, 0);
+		$decrypted = version_compare(PHP_VERSION, '5.3.3') >= 0 ? openssl_decrypt($decrypted, $encryptionMethod, API_KEY, 0, '3j9hwG7uj8uvpRAT') : openssl_decrypt($decrypted, $encryptionMethod, API_KEY, 0);
 		if($decrypted === false || !is_numeric($decrypted))
 		{
 			if(!empty($decrypted))

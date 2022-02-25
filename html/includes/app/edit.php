@@ -36,8 +36,8 @@
 	$recaptcha_sitekey = mysqli_real_escape_string($mysqli, $_POST['recaptcha_sitekey']);
 	$recaptcha_secretkey = mysqli_real_escape_string($mysqli, $_POST['recaptcha_secretkey']);
 	$test_email_prefix = mysqli_real_escape_string($mysqli, $_POST['test_email_prefix']);
-	$custom_domain_protocol = mysqli_real_escape_string($mysqli, $_POST['protocol']);
-	$custom_domain = mysqli_real_escape_string($mysqli, $_POST['custom_domain']);
+	$custom_domain_protocol = isset($_POST['protocol']) ? mysqli_real_escape_string($mysqli, $_POST['protocol']) : '';
+	$custom_domain = isset($_POST['custom_domain']) ? mysqli_real_escape_string($mysqli, $_POST['custom_domain']): '';
 	$custom_domain_enabled = is_numeric($_POST['custom_domain_status']) ? mysqli_real_escape_string($mysqli, (int)$_POST['custom_domain_status']) : 0;
 	$templates_lists_sorting = mysqli_real_escape_string($mysqli, $_POST['sort-by']);
 	$opens_tracking = is_numeric($_POST['opens']) ? mysqli_real_escape_string($mysqli, (int)$_POST['opens']) : 1;

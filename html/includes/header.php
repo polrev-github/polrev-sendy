@@ -1,6 +1,5 @@
 <?php include('includes/functions.php');?>
 <?php if(isset($_COOKIE['logged_in'])){start_app();}?>
-
 <?php 
 	//Check if dark mode appearance should be loaded
 	
@@ -55,7 +54,6 @@
 		else $dark_mode = get_app_info('dark_mode');
 	}
 ?>
-
 <!DOCTYPE html>
 <html>
 	<head>

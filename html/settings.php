@@ -23,7 +23,6 @@
 		<?php else:?>
 		
 		<div class="sidebar-nav sidebar-box" style="padding: 19px;">
-			<h3><?php echo _('Amazon SES Quota');?></h3><br/>
 			<?php include('includes/helpers/ses-quota.php');?>
 		</div>
 		
@@ -343,6 +342,7 @@
 					        , 'ap-southeast-1' => 'Singapore'
 					        , 'ap-southeast-2' => 'Sydney'
 					        , 'ap-northeast-1' => 'Tokyo'
+							, 'ap-northeast-3' => 'Osaka'
 					        , 'ap-northeast-2' => 'Seoul'
 					        , 'ap-south-1' => 'Mumbai'
 					        , 'me-south-1' => 'Bahrain'

@@ -20,7 +20,7 @@ services:
   sendy:
     depends_on:
       - db_sendy
-    image: sendy:latest
+    #image: sendy:latest
     build:
       context: .
       # Uncomment to enabled XDEBUG build

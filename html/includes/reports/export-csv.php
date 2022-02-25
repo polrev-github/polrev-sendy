@@ -347,8 +347,8 @@ if($export)
 		}
 		
 		//Parse join_date & last activity date
-		$join_date = $join_date=='' ? '' : parse_date($join_date, 'long', false);
-		$last_activity = $last_activity=='' ? '' : parse_date($last_activity, 'long', false);
+		$join_date = $join_date=='' ? '' : parse_date_csv($join_date, 'long', false);
+		$last_activity = $last_activity=='' ? '' : parse_date_csv($last_activity, 'long', false);
 		
 		//If importing CSV into a list, include only name and email data
 		if($create)

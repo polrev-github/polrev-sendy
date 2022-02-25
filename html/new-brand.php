@@ -82,7 +82,6 @@
 <div class="row-fluid">
 	<div class="span2">
 		<div class="sidebar-nav sidebar-box" style="padding: 19px;">
-			<h3><?php echo _('Amazon SES Quota');?></h3><br/>
 			<?php include('includes/helpers/ses-quota.php');?>
 		</div>
 	</div>
@@ -476,7 +475,7 @@
 		        
 		        <div id="collapse3" class="accordion-body collapse">
 			        <div class="alert">
-				        <span class="icon icon-info-sign"></span> <?php echo _('If you prefer using other email service providers over Amazon SES for sending emails, set your SMTP settings here. You must also remove your \'Amazon Web Services Credentials\' from the main settings so that emails are sent via these SMTP settings. Note that multi-threading is not supported, bounces and complaints will also not be registered if you use other email service providers to send emails.');?>
+				        <span class="icon icon-info-sign"></span> <?php echo _('If you prefer using other email service providers over Amazon SES for sending emails, set your SMTP settings here. You must also remove your \'Amazon Web Services Credentials\' from the main settings so that emails are sent via these SMTP settings.');?>
 			        </div>
 			        
 			        <label class="control-label" for="smtp_host"><?php echo _('Host');?></label>

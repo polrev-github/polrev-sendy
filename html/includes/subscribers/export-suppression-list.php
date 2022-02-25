@@ -32,7 +32,7 @@ if ($r2 && mysqli_num_rows($r2) > 0)
     while($row = mysqli_fetch_array($r2))
     {
 		$email = $row['email'];
-		$timestamp = '"'.parse_date($row['timestamp'], 'long', false).'"';
+		$timestamp = '"'.parse_date_csv($row['timestamp']).'"';
 		$block_attempts = $row['block_attempts'];
 		
 		$data .= $email.','.$timestamp.',"'.$block_attempts.'"'."\n";

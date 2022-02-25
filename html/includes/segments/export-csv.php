@@ -73,7 +73,7 @@ if ($r2 && mysqli_num_rows($r2) > 0)
 				$cf_field_array = explode(':', $custom_fields_array[$i]);
 				
 				if($cf_field_array[1]=='Date' && $cf_field_array[1]!='')
-					$cf_value .= '"'.strftime("%b %d %Y", $custom_values_array[$i]).'",';
+					$cf_value .= '"'.parse_date_csv($custom_values_array[$i]).'",';
 				else			
 					$cf_value .= '"'.$custom_values_array[$i].'",';
 			}

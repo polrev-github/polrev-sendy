@@ -238,7 +238,7 @@ if($export)
 		$gdpr_status = $gdpr ? 'Yes' : 'No';
 		
 		//Parse join_date
-		$join_date = $join_date=='' ? '' : parse_date($join_date, 'long', false);
+		$join_date = $join_date=='' ? '' : parse_date_csv($join_date, 'long', false);
 		
 		//If importing CSV into a list, include only name and email data
 		if($create)

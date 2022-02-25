@@ -20,25 +20,18 @@
 		if($daily_quota==0) $quota_color = 'label-important';
 		else if($daily_quota==200) $quota_color = '';
 		else $quota_color = 'label-success';
-		
-		//getAccountSendingEnabled
-/*
-		$getAccountStatus = $ses->getAccountSendingEnabled();
-		$account_status_color = $getAccountStatus=='Enabled' ? 'label-success' : 'label-important';
-		if($getAccountStatus=='Disabled') $quota_color = 'label-important'; //If sending status is 'Disabled', all $quota_color will be red
-*/
 	}
 
 	if(get_app_info('s3_key')=='' && get_app_info('s3_secret')==''):
 ?>
-			
-<p><strong><?php echo _('Amazon SES is not set up as we can\'t find your AWS credentials in');?> <a href="<?php echo get_app_info('path');?>/settings" style="text-decoration: underline"><?php echo _('settings');?></a>.</strong></p>
-<p><strong><?php echo _('If you entered SMTP credentials when you create or edit a brand, emails will be sent via SMTP. Otherwise, emails will be sent via your server (not recommended).');?></strong></p>
-<p><a href="https://sendy.co/get-started" target="_blank"><?php echo _('View Get Started guide');?> &rarr;</a></p>
+<h3><span class="icon icon-envelope-alt"></span> <?php echo _('Ways to send emails');?></h3><br/>
+<p><strong>1️⃣ Send emails via Amazon SES</strong></p>
+<p><?php echo _('Follow Step 5 of the <a href="https://sendy.co/get-started#step5" target="_blank" style="text-decoration: underline">Get Started Guide</a> to hook up your Amazon SES account with your Sendy installation.');?></p>
+<p><strong>2️⃣ Send emails via other SMTP services</strong></p>
+<p><?php echo _('When creating or editing a brand, save the SMTP credentials generated from the email sending service of your choice under \'SMTP settings\'');?></p>
 
 <?php else:?>
-
-<!-- <p><strong><?php echo _('Sending status');?>:</strong> <span class="label <?php echo $account_status_color;?>"><?php echo $getAccountStatus;?></span></p> -->
+<h3><?php echo _('Amazon SES Quota');?></h3><br/>
 <p><strong><?php echo _('SES region');?>:</strong> <span class="label <?php echo $quota_color;?>"><?php echo get_app_info('ses_region');?></span></p>
 <p><strong><?php echo _('Daily quota');?>:</strong> <span class="label <?php echo $quota_color;?>"><?php echo number_format($daily_quota);?></span></p>
 <p><strong><?php echo _('Sends left');?>:</strong> <span class="label <?php echo $quota_color;?>"><?php echo number_format($sends_left);?></span></p>

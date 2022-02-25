@@ -333,7 +333,7 @@
 					for($c=0;$c<count($custom_fields_array);$c++)
 					{
 						$fields_array = explode(':', $custom_fields_array[$c]);
-						$values_array = $fields_array[1]=='Date' ? strftime("%b %d, %Y", $custom_fields_values_array[$c]) : $custom_fields_values_array[$c];
+						$values_array = $fields_array[1]=='Date' ? strftime("%b %d, %Y", (int)$custom_fields_values_array[$c]) : $custom_fields_values_array[$c];
 						$rules_data[$fields_array[0]] = $values_array;
 					}
 				}

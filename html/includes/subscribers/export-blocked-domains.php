@@ -32,7 +32,7 @@ if ($r2 && mysqli_num_rows($r2) > 0)
     while($row = mysqli_fetch_array($r2))
     {
 		$domain = $row['domain'];
-		$timestamp = '"'.parse_date($row['timestamp'], 'long', false).'"';
+		$timestamp = '"'.parse_date_csv($row['timestamp']).'"';
 		$block_attempts = $row['block_attempts'];
 		
 		$data .= $domain.','.$timestamp.',"'.$block_attempts.'"'."\n";

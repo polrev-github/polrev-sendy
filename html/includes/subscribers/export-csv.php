@@ -153,8 +153,8 @@ if ($r2 && mysqli_num_rows($r2) > 0)
 		$gdpr_status = $gdpr ? 'Yes' : 'No';
 		
 		//Parse join_date & last activity date
-		$join_date = $join_date=='' ? '' : parse_date($join_date, 'long', false);
-		$last_activity = $last_activity=='' ? '' : parse_date($last_activity, 'long', false);
+		$join_date = $join_date=='' ? '' : parse_date_csv($join_date);
+		$last_activity = $last_activity=='' ? '' : parse_date_csv($last_activity);
 		
 		$custom_values = $row['custom_fields'];
 		$cf_value = '';		
@@ -172,7 +172,7 @@ if ($r2 && mysqli_num_rows($r2) > 0)
 				$cf_field_array = explode(':', $custom_fields_array[$i]);
 				
 				if($cf_field_array[1]=='Date' && $cf_field_array[1]!='')
-					$cf_value .= '"'.strftime("%b %d %Y", $custom_values_array[$i]).'",';
+					$cf_value .= '"'.parse_date_csv($custom_values_array[$i]).'",';
 				else			
 					$cf_value .= '"'.$custom_values_array[$i].'",';
 			}

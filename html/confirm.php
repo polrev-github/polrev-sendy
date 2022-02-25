@@ -42,19 +42,9 @@
 	include('includes/helpers/short.php');
 	include_once('includes/helpers/PHPMailerAutoload.php');
 	
-	//new encrypted string
-	if(!is_numeric(decrypt_string($_GET['e'])))
-	{
-		$i_array = explode('/', decrypt_string($_GET['e']));
-		$email_id = (int)mysqli_real_escape_string($mysqli, $i_array[0]);
-		$list_id = (int)mysqli_real_escape_string($mysqli, $i_array[1]);
-	}
-	//old encrypted string
-	else
-	{
-		$email_id = decrypt_int($_GET['e']);
-		$list_id = decrypt_int($_GET['l']);
-	}
+	//Decrypt string
+	$email_id = decrypt_int($_GET['e']);
+	$list_id = decrypt_int($_GET['l']);
 	
 	$time = time();
 	$join_date = round($time/60)*60;
@@ -163,7 +153,7 @@
 			for($c=0;$c<count($custom_fields_array);$c++)
 			{
 				$fields_array = explode(':', $custom_fields_array[$c]);
-				$values_array = $fields_array[1]=='Date' ? strftime("%b %d, %Y", $custom_fields_values_array[$c]) : $custom_fields_values_array[$c];
+				$values_array = $fields_array[1]=='Date' ? strftime("%b %d, %Y", (int)$custom_fields_values_array[$c]) : $custom_fields_values_array[$c];
 				$rules_data[$fields_array[0]] = $values_array;
 			}
 		}

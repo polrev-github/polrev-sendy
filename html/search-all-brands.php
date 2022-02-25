@@ -6,7 +6,6 @@
 <div class="row-fluid">
     <div class="span2">
         <div class="sidebar-nav sidebar-box" style="padding: 19px;">
-			<h3><?php echo _('Amazon SES Quota');?></h3><br/>
 			<?php include('includes/helpers/ses-quota.php');?>
 		</div>
     </div> 

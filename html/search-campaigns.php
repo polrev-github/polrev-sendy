@@ -78,7 +78,7 @@
 		  <tbody>
 		  	
 		  	<?php
-			  	$q = 'SELECT * FROM campaigns WHERE (title LIKE "%'.$s.'%" OR label LIKE "%'.$s.'%" OR plain_text LIKE "%'.$s.'%" OR html_text LIKE "%'.$s.'%") AND userID = '.get_app_info('main_userID').' AND app='.get_app_info('app').' ORDER BY id DESC';
+			  	$q = 'SELECT * FROM campaigns WHERE (title LIKE "%'.$s.'%" OR label LIKE "%'.$s.'%" OR plain_text LIKE "%'.$s.'%" OR html_text LIKE "%'.$s.'%" OR query_string LIKE "%'.$s.'%") AND userID = '.get_app_info('main_userID').' AND app='.get_app_info('app').' ORDER BY id DESC';
 			  	$r = mysqli_query($mysqli, $q);
 			  	$number_of_results = mysqli_num_rows($r);
 			  	echo '

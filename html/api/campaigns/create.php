@@ -334,6 +334,7 @@
 			exit;
 		}
 		
+		$listids = $listids=='' ? '0' : $listids;
 		$segment_ids = $segment_ids=='' ? '0' : $segment_ids;
 		$excludelistids = $excludelistids=='' ? '0' : $excludelistids;
 		$exclude_segments_ids = $exclude_segments_ids=='' ? '0' : $exclude_segments_ids;

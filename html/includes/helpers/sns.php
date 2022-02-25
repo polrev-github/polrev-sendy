@@ -27,6 +27,7 @@ class AmazonSNS {
 		,'ap-southeast-1' => 'sns.ap-southeast-1.amazonaws.com'
 		,'ap-southeast-2' => 'sns.ap-southeast-2.amazonaws.com'
 		,'ap-northeast-1' => 'sns.ap-northeast-1.amazonaws.com'
+		,'ap-northeast-3' => 'sns.ap-northeast-3.amazonaws.com'
 		,'ap-northeast-2' => 'sns.ap-northeast-2.amazonaws.com'
 		,'ap-south-1' => 'sns.ap-south-1.amazonaws.com'
 		,'eu-central-1' => 'sns.eu-central-1.amazonaws.com'
@@ -436,6 +437,7 @@ class AmazonSNS {
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		$output = curl_exec($ch);
 		$info = curl_getinfo($ch);
+		$curl_error = curl_error($ch);
 		curl_close($ch);
 
 		// Load XML response
@@ -452,7 +454,7 @@ class AmazonSNS {
 			}
 			else {
 				// Some other problem
-				throw new APIException('There was a problem executing this request', $info['http_code']);
+				throw new APIException('There was a problem executing this request. '.$curl_error, $info['http_code']);
 			}
 		}
 		else {

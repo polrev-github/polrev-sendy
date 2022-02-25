@@ -14,11 +14,12 @@
 		$("#add-custom-field-form").validate({
 			rules: {
 				c_field: {
-					required: true
+					required: true,
+					maxlength: 30
 				}
 			},
 			messages: {
-				c_field: "<?php echo addslashes(_('Please enter a custom field name'));?>"
+				c_field: "<?php echo addslashes(_('A custom field name of less than<br/>30 characters is required'));?>"
 			}
 		});
 		$("#c_field").focus();

@@ -983,14 +983,38 @@
 				if(get_saved_data('opens_tracking')==1) $opens_tracking = '<span class="label label-success">'._('Enabled').'</span>';
 				else if(get_saved_data('opens_tracking')==0) $opens_tracking = '<span class="label">'._('Disabled').'</span>';
 				else if(get_saved_data('opens_tracking')==2) $opens_tracking = '<span class="label label-success">'._('Anonymously').'</span>';
+				
 				//Click tracking settings
 				if(get_saved_data('links_tracking')==1) $links_tracking = '<span class="label label-success">'._('Enabled').'</span>';
 				else if(get_saved_data('links_tracking')==0) $links_tracking = '<span class="label">'._('Disabled').'</span>';
 				else if(get_saved_data('links_tracking')==2) $links_tracking = '<span class="label label-success">'._('Anonymously').'</span>';
+				
+				//get custom domain for web version if available
+				$q = 'SELECT custom_domain, custom_domain_protocol, custom_domain_enabled FROM apps WHERE id = '.get_app_info('app').' AND userID = '.get_app_info('main_userID');
+				$r = mysqli_query($mysqli, $q);
+				if ($r && mysqli_num_rows($r) > 0)
+				{
+					while($row = mysqli_fetch_array($r))
+					{
+						$custom_domain = $row['custom_domain'];
+						$custom_domain_protocol = $row['custom_domain_protocol'];
+						$custom_domain_enabled = $row['custom_domain_enabled'];
+						if($custom_domain!='' && $custom_domain_enabled)
+						{
+							$parse = parse_url(get_app_info('path'));
+							$domain = $parse['host'];
+							$protocol = $parse['scheme'];
+							$app_path = str_replace($domain, $custom_domain, get_app_info('path'));
+							$app_path = str_replace($protocol, $custom_domain_protocol, $app_path);
+						}
+						else $app_path = get_app_info('path');
+					}  
+				}
 			?>
 			
 	    	<p><strong><?php echo _('Opens tracking');?></strong> <?php echo $opens_tracking;?></p>
 	    	<p><strong><?php echo _('Clicks tracking');?></strong> <?php echo $links_tracking;?></p>
+	    	<p><strong><?php echo _('Web version');?></strong> <a href="<?php echo $app_path;?>/w/<?php echo encrypt_val($cid);?>" target="_blank" title="<?php echo _('View web version link');?>"><span class="label" id="webversion_url"><?php echo $app_path;?>/w/<?php echo encrypt_val($cid);?></span></a></p>
 	    	<?php 
 		        if (file_exists('uploads/attachments/'.$cid))
 				{

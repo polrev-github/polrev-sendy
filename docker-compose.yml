@@ -23,7 +23,7 @@ services:
     #image: sendy:latest
     build:
       context: .
-      # Uncomment to enabled XDEBUG build
+      target: sendy
       # target: debug
     env_file: ./config/.dev.env
     ports:

@@ -8,3 +8,5 @@
 letsencrypt
 
 /html/uploads/*
+
+docker-compose.override.yml

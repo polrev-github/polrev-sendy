@@ -5,11 +5,13 @@
 ### Development
 
 ```bash
+cp docker-compose.dev.yml docker-compose.override.yml
 docker-compose up
 ```
 
 ### Production
 
 ```bash
-docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+cp docker-compose.prod.yml docker-compose.override.yml
+docker-compose up -d
 ```

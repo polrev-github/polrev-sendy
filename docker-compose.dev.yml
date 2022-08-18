@@ -1,0 +1,13 @@
+# Copy to docker-compose.override.yml
+
+services:
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    depends_on:
+      - db_sendy
+    env_file: ./config/.dev.env
+    ports:
+      - 8888:80
+    networks:
+      - polrev-sendy
